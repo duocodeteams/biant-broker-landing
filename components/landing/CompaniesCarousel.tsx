@@ -34,9 +34,9 @@ const companiesSeguros: CompanyItem[] = [
   { name: "BBVA Seguros", src: "/bbvasf.png", logoClass: "scale-100" },
   { name: "Galicia Seguros", src: "/galicialogo.webp", logoClass: "scale-100" },
   { name: "Evolución Seguros", src: "/evlogo.webp", logoClass: "scale-100" },
+  { name: "Aseguradora de Créditos y Garantías", src: "/acglogo.png", logoClass: "scale-100" },
   { name: "Nación Seguros", src: "/nacionlogo.webp", logoClass: "scale-100" },
-  { name: "American Consultants Group", src: "/acglogo.png", logoClass: "scale-100" },
-  { name: "Metropol Seguros", src: "/metrologo.png", logoClass: "scale-100", darkBg: true },
+  { name: "Metropol Seguros", src: "/metrologo.png", logoClass: "scale-100" },
   { name: "Life Seguros", src: "/lifesf.png", logoClass: "scale-100" },
   { name: "Euroamérica Seguros", src: "/eurologo.jpg", logoClass: "scale-100" },
   { name: "Rio Uruguay Seguros", src: "/ruslogo.webp", logoClass: "scale-[1.50]" },
@@ -100,6 +100,7 @@ type CarouselRowProps = {
 function CompanyCarouselRow({ title, description, items }: CarouselRowProps) {
   const baseId = useId();
   const [carouselIdx, setCarouselIdx] = useState(0);
+  const [isAutoPlayPaused, setIsAutoPlayPaused] = useState(false);
   const visibleCount = useVisibleCount();
   const totalSlides = useSlideCount(items.length, visibleCount);
   const canNavigate = totalSlides > 1;
@@ -109,13 +110,13 @@ function CompanyCarouselRow({ title, description, items }: CarouselRowProps) {
   }, [totalSlides]);
 
   useEffect(() => {
-    if (!canNavigate) return;
+    if (!canNavigate || isAutoPlayPaused) return;
     const id = setInterval(
       () => setCarouselIdx((p) => (p + 1) % totalSlides),
       2800
     );
     return () => clearInterval(id);
-  }, [canNavigate, totalSlides]);
+  }, [canNavigate, isAutoPlayPaused, totalSlides]);
 
   function handlePrev() {
     setCarouselIdx((p) => (p - 1 + totalSlides) % totalSlides);
@@ -148,19 +149,23 @@ function CompanyCarouselRow({ title, description, items }: CarouselRowProps) {
               className="flex h-48 min-h-0 min-w-[304px] shrink-0 flex-col items-center justify-center gap-4 overflow-clip rounded-3xl border border-gray-100 bg-gray-50"
             >
               <div
-                className={`relative flex w-[260px] min-h-0 items-center justify-center ${logoBoxH} ${logoPadding} ${overflowForScale} rounded-2xl border shadow-[0_10px_28px_-18px_rgba(33,44,124,0.35)] ${c.darkBg ? "border-gray-300 bg-gray-300" : "border-gray-100 bg-white"}`}
+                className={`relative flex w-[260px] min-h-0 items-center justify-center ${logoBoxH} ${logoPadding} ${overflowForScale} rounded-2xl border border-gray-100 bg-white shadow-[0_10px_28px_-18px_rgba(33,44,124,0.35)]`}
               >
                 <div
                   className="relative h-full w-full min-h-0 min-w-0 origin-center transform-gpu transition-transform duration-300 will-change-transform"
                   style={{ transform: `scale(${resolveScale(c.logoClass)})` }}
                 >
-                  <Image
-                    src={c.src}
-                    alt={c.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 260px"
-                    className="object-contain [image-rendering:auto]"
-                  />
+                  <div
+                    className={`relative h-full w-full ${c.darkBg ? "rounded-lg bg-gray-300 p-2" : ""}`}
+                  >
+                    <Image
+                      src={c.src}
+                      alt={c.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 260px"
+                      className="object-contain [image-rendering:auto]"
+                    />
+                  </div>
                 </div>
               </div>
               <span className="px-2 text-center text-base font-medium text-gray-500">
@@ -205,6 +210,17 @@ function CompanyCarouselRow({ title, description, items }: CarouselRowProps) {
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-[#212C7C] shadow-[0_8px_20px_-16px_rgba(33,44,124,0.45)] transition hover:border-[#212C7C]/30 hover:bg-gray-50"
             >
               <span aria-hidden className="icon-[mdi--chevron-right] h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsAutoPlayPaused((prev) => !prev)}
+              aria-label={`${title} — ${isAutoPlayPaused ? "reanudar" : "pausar"} reproducción automática`}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-[#212C7C] shadow-[0_8px_20px_-16px_rgba(33,44,124,0.45)] transition hover:border-[#212C7C]/30 hover:bg-gray-50"
+            >
+              <span
+                aria-hidden
+                className={`h-4 w-4 ${isAutoPlayPaused ? "icon-[mdi--play]" : "icon-[mdi--pause]"}`}
+              />
             </button>
           </div>
         )}
