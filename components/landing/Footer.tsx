@@ -2,6 +2,10 @@ import Image from "next/image";
 import { socialIcons } from "./data";
 import { WHATSAPP_CHAT_URL } from "./whatsapp-url";
 
+const FOOTER_ADDRESS = "AV. BELGRANO 485 PISO 5 CABA CP 1092";
+const GOOGLE_MAPS_PLACE_URL =
+  "https://www.google.com/maps/search/?api=1&query=Av.+Belgrano+485%2C+Piso+5%2C+C1092AAC%2C+Buenos+Aires%2C+Argentina";
+
 export function Footer() {
   return (
     <footer id="contacto" className="scroll-mt-20 bg-[#212C7C] pt-14 pb-8 px-6">
@@ -10,17 +14,37 @@ export function Footer() {
           <div>
             <div className="mb-4">
               <Image
-                src="/biantblanco.png"
+                src="/biantlogosf.png"
                 alt="Biant Seguros"
                 width={180}
                 height={48}
-                className="h-14  max-w-[350px] object-cover"
+                className="h-14 max-w-[350px] object-cover brightness-0 invert"
                 priority={false}
               />
             </div>
-            <p className="text-white text-sm leading-relaxed text-justify max-w-xs">
+            <p className="text-white text-sm leading-relaxed text-left max-w-xs">
               Una comunidad colaborativa de productores de seguros comprometidos con el crecimiento mutuo y la excelencia en el servicio.
             </p>
+            <div className="mt-4 text-left max-w-xs">
+              <p className="text-[11px] font-bold text-[#E2482D] tracking-[.12em] uppercase mb-2">
+                Ubicación
+              </p>
+              <p className="text-white text-xs leading-relaxed mb-2">
+                {FOOTER_ADDRESS}
+              </p>
+              <a
+                href={GOOGLE_MAPS_PLACE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[#ffb8a8] text-xs font-medium hover:underline"
+              >
+                <span
+                  aria-hidden
+                  className="icon-[mdi--map-marker] h-4 w-4 shrink-0 text-[#E2482D]"
+                />
+                Ver en Google Maps
+              </a>
+            </div>
           </div>
 
           <div>
@@ -34,7 +58,7 @@ export function Footer() {
 
           <div>
             <h4 className="text-[11px] font-bold text-[#E2482D] tracking-[.12em] uppercase mb-4">Atención</h4>
-            <p className="text-white/40 text-xs mb-1">Atención al Asegurado</p>
+            <p className="text-white text-xs mb-1">Atención al Asegurado</p>
             <a
               href={WHATSAPP_CHAT_URL}
               target="_blank"
@@ -43,7 +67,7 @@ export function Footer() {
             >
               0800-666-8400
             </a>
-            <p className="text-white/40 text-xs mb-1 mt-4">Organismo de Control</p>
+            <p className="text-white text-xs mb-1 mt-4">Organismo de Control</p>
             <a href="https://www.ssn.gob.ar" target="_blank" rel="noreferrer" className="text-[#ffb8a8] text-xs hover:underline">
               www.ssn.gob.ar
             </a>
@@ -72,9 +96,7 @@ export function Footer() {
                     }
                     className="w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center hover:bg-[#E2482D] transition-colors duration-200 cursor-pointer"
                   >
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={s.path} />
-                    </svg>
+                    <span className={`${s.icon} h-4 w-4 text-white`} />
                   </a>
                 );
               })}            </div>
@@ -82,8 +104,8 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <span className="text-white/30 text-xs">© {new Date().getFullYear()} BIANT Seguros. Todos los derechos reservados.</span>
-          <span className="text-white/30 text-xs">Supervisado por la Superintendencia de Seguros de la Nación</span>
+          <span className="text-white text-xs">© {new Date().getFullYear()} BIANT Seguros. Todos los derechos reservados.</span>
+          <span className="text-white text-xs">Supervisado por la Superintendencia de Seguros de la Nación</span>
         </div>
       </div>
     </footer>

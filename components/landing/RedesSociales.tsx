@@ -1,12 +1,11 @@
 import { Eyebrow } from "./Eyebrow";
-
-const socials = [
-  { label: "Instagram", icon: "icon-[mdi--instagram]", href: "https://www.instagram.com/biant.seguros/" },
-  { label: "Facebook", icon: "icon-[mdi--facebook]", href: "#" },
-  { label: "LinkedIn", icon: "icon-[mdi--linkedin]", href: "https://www.linkedin.com/in/seguros-biant-4202a21a6/" },
-] as const;
+import { socialIcons } from "./data";
 
 export function RedesSociales() {
+  const featuredSocials = socialIcons.filter(
+    (social) => social.label !== "WhatsApp"
+  );
+
   return (
     <section
       id="crecimiento"
@@ -42,7 +41,7 @@ export function RedesSociales() {
             <div className="h-px flex-1 bg-white" />
           </div>
           <div className="flex flex-wrap gap-3">
-            {socials.map((s) => (
+            {featuredSocials.map((s) => (
               <a
                 key={s.label}
                 href={s.href}

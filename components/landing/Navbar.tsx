@@ -97,41 +97,22 @@ export function Navbar() {
               aria-label="BIANT Seguros — Ir al inicio"
               className="group relative flex shrink-0 items-center gap-3 justify-self-start rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-[#E2482D]/50 focus-visible:ring-offset-2"
             >
-              {/* Logo: dos versiones cross-fade según el estado del navbar */}
+              {/* Logo color único, blanqueado por filtro cuando el navbar está sobre el hero */}
               <span
                 className={`relative block shrink-0 transition-all duration-500 group-hover:scale-[1.02] ${
                   scrolled ? "h-14 w-[140px]" : "h-20 w-[180px]"
                 }`}
               >
-                {/* Versión color (caja blanca) cuando hay scroll */}
-                <span
-                  className={`absolute inset-0 flex items-center justify-center overflow-hidden   transition-opacity duration-500 ${
-                    scrolled ? "opacity-100" : "opacity-0"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="./biantlogosf.png"
+                  alt="Biant Seguros"
+                  className={`h-full w-full object-cover transition-all duration-500 ${
+                    scrolled
+                      ? "scale-110 filter-none"
+                      : "brightness-0 invert drop-shadow-[0_4px_18px_rgba(0,0,0,0.45)]"
                   }`}
-                  aria-hidden={!scrolled}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="./biantlogosf.png"
-                    alt="Biant Seguros"
-                    className="h-full w-full scale-110 object-cover"
-                  />
-                </span>
-
-                {/* Versión blanca (sin caja) sobre el hero transparente */}
-                <span
-                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
-                    scrolled ? "opacity-0" : "opacity-100"
-                  }`}
-                  aria-hidden={scrolled}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="./biantblanco.png"
-                    alt="Biant Seguros"
-                    className="h-full w-full object-cover drop-shadow-[0_4px_18px_rgba(0,0,0,0.45)]"
-                  />
-                </span>
+                />
               </span>
 
              
